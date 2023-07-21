@@ -2,7 +2,7 @@
 
 ## Context
    
-I a new Salesforce developer. I started to work with the Salesforce project and using git to store the latest version of Salesforce code. I have an issue when retrieving the code caused I don't know what the missing metadata. So I decided to build this cheat sheet for the new guys like me. If you have an experience with Salesforce, don't hesitate to contribute, I really appreciate that.
+I a new Salesforce developer. I started to work with the Salesforce project and using git I am a developer and join in new projects in Salesforce. I have a problem when coding with Salesforce is saving the latest code from Salesforce server. It's not a save operation, but I often miss metadata when committing git (maybe not a big problem if I have more experience + better memory 😂). So I decided to create this cheat sheet to help newcomers like me. Very welcome and appreciate your contributions.
 
 ## How to use this
 
@@ -11,10 +11,10 @@ We have some type:
 ### Must
 If you edit this section, you must to retrieve the following metadata from the Salesforce organization.
 
-### Warning
+### Should
 Maybe this metadata is required, we prefer to retrieve and save it in the repository. It depends on your project.
 
-### Should
+### Optional
 This metadata is not required, but should be included in the git repository. Just take a look!
 
 ## Go to the file

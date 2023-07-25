@@ -1,2 +1,12 @@
+code/venv
 code/environment
 code/__pycache__/
+.DS_Store
+.sf
+.sfdx
+.vim-force.com
+.vscode
+jsconfig.json
+node_modules
+package-lock.json
+bien-org

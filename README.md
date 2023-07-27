@@ -10,11 +10,25 @@ I a new Salesforce developer. I started to work with the Salesforce project and 
 ### Requisition:
 
 Python 3, pip3 and virtualenv
+<details>
+<summary>
+Installation (click to expand)
+</summary>
 
-See how to install and create virtualenv at here: [https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/)
+#### Install python 3:
+Unix/macOS included python3, check it by command `python3 --version`
 
-### After clone/download source, then:
+Windows: access [https://www.python.org/downloads/](https://www.python.org/downloads/) or install directly from Microsoft Store
+
+#### Install virtual environment
 ```bash
+python3 -m pip install --user virtualenv
+```
+</details>
+
+### Clone source:
+```bash
+git clone https://github.com/thesea2201/sf-metadata-to-git-cheatsheet.git
 cd sf-metadata-to-git-cheatsheet/source
 ```
 

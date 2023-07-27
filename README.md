@@ -4,7 +4,57 @@
    
 I a new Salesforce developer. I started to work with the Salesforce project and using git I am a developer and join in new projects in Salesforce. I have a problem when coding with Salesforce is saving the latest code from Salesforce server. It's not a save operation, but I often miss metadata when committing git (maybe not a big problem if I have more experience + better memory 😂). So I decided to create this cheat sheet to help newcomers like me. Very welcome and appreciate your contributions.
 
-## How to use this
+
+## NEW: has a tool 
+
+### Requisition:
+
+Python 3, pip3 and virtualenv
+
+See how to install and create virtualenv at here: [https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/)
+
+### After clone/download source, then:
+```bash
+cd sf-metadata-to-git-cheatsheet/source
+```
+
+### Create a virtual environment
+```bash
+python3 -m venv venv
+```
+
+### Activating a virtual environment:
+```bash
+source env/bin/activate # Unix/Macos
+.\env\Scripts\activate # Windows
+```
+
+### Complete setting in `user_config.py` file
+```
+org_username = "<your_org_username>" # using command "sfdx org list" to see list of org username
+api_version = '55.0' # Depend on your project
+modified_filter_duration = 'today' # 'today', 'yesterday', '2023-07-22', '2023-07-22T08'
+# get all metadata has lastModifiedDate since modified_filter_duration, Todo: 
+package_xml_file = f"{data_base_folder}/package.xml" # can direct to your project manifest/package.xml, it will override your file
+```
+
+### Get all metadata types from org
+```bash
+python3 get-all-metadata-types.py
+```
+Result will be stored in [source/data/metadata-types.csv](sourcedatametadata-types.csv) file(Unix/macOS) or [source\data\metadata-types.csv](source\data\metadata-types.csv) file(Windows)
+
+### Get all changed metadata
+```bash
+python3 get-changed-metadata.py
+```
+
+### Update your package.xml file
+```bash
+python3 update-package-file.py
+```
+
+## How to use this cheatsheet
 
 We have some type:
 

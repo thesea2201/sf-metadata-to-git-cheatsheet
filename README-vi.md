@@ -29,6 +29,11 @@ source env/bin/activate # Unix/Macos
 .\env\Scripts\activate # Windows
 ```
 
+### Install required library
+```bash
+pip install -r requirements.txt
+```
+
 ### Complete setting in `user_config.py` file
 ```
 org_username = "<your_org_username>" # using command "sfdx org list" to see list of org username

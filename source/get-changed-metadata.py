@@ -7,10 +7,10 @@ from tqdm import tqdm
 
 import user_config as config
 
-org_username = config.org_username
+ORG_USERNAME = config.ORG_USERNAME
 metadata_types_file = config.metadata_types_file
 changed_metadata_file = config.changed_metadata_file
-modified_filter_duration = config.modified_filter_duration
+MODIFIED_FILTER_DURATION = config.MODIFIED_FILTER_DURATION
 
 today = datetime.datetime.now().date()
 
@@ -29,13 +29,21 @@ def get_date(input):
                     
 
 def get_date_from_type():
-    match modified_filter_duration:
-        case "today":
-            filtered_date = today
-        case "yesterday":
-            filtered_date = today - datetime.timedelta (days=1)
-        case default:
-            filtered_date = get_date(modified_filter_duration)
+    # Causes match/case was introduced in 3.10 version, so comebacks to the old-school
+    if MODIFIED_FILTER_DURATION == "today":
+        filtered_date = today
+    elif MODIFIED_FILTER_DURATION == "yesterday":
+        filtered_date = today - datetime.timedelta (days=1)
+    else:
+        filtered_date = get_date(MODIFIED_FILTER_DURATION)
+
+    # match MODIFIED_FILTER_DURATION:
+    #     case "today":
+    #         filtered_date = today
+    #     case "yesterday":
+    #         filtered_date = today - datetime.timedelta (days=1)
+    #     case default:
+    #         filtered_date = get_date(MODIFIED_FILTER_DURATION)
 
     return filtered_date.strftime("%Y-%m-%dT%H")
  
@@ -61,7 +69,7 @@ with open(metadata_types_file, "r") as f:
         metadata_type = row[0]
 
         # Define the command to execute sfdx for each metadata type
-        command = f"sfdx force:mdapi:listmetadata -u {org_username} -m {metadata_type} -a 52.0 --json"
+        command = f"sfdx force:mdapi:listmetadata -u {ORG_USERNAME} -m {metadata_type} -a 52.0 --json"
         # Run the command and capture the output
         output = subprocess.check_output(command, shell=True)
         # Parse the output as json
@@ -77,10 +85,9 @@ with open(metadata_types_file, "r") as f:
                     # Get the fullName and lastModifiedDate from the result
                     fullName = result["fullName"]
                     lastModifiedDate = result["lastModifiedDate"]
-                    # Convert the lastModifiedDate to a datetime object
-                    # lastModifiedDate = datetime.datetime.strptime(lastModifiedDate, "%Y-%m-%dT%H:%M:%S.%fZ")
+                    
                     # Check if the lastModifiedDate greater than filtered_date
-                    if lastModifiedDate > filtered_date:
+                    if lastModifiedDate >= filtered_date:
                         # Write the metadata type and fullName to the csv file
                         writer.writerow([metadata_type, fullName])
     

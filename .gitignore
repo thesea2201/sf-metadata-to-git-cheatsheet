@@ -1,6 +1,3 @@
-code/venv
-code/environment
-code/__pycache__/
 .DS_Store
 .sf
 .sfdx

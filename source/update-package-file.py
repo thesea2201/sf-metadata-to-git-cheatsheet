@@ -3,9 +3,9 @@ import pandas as pd
 
 import user_config as config
 
-package_xml_file = config.package_xml_file
+PACKAGE_XML_FILE = config.PACKAGE_XML_FILE
 changed_metadata_file = config.changed_metadata_file
-api_version = config.api_version
+API_VERSION = config.API_VERSION
 
 # Read the changed_metadata_file file into a dataframe
 df = pd.read_csv(changed_metadata_file)
@@ -13,7 +13,7 @@ df = pd.read_csv(changed_metadata_file)
 # Create an empty list to store the xml elements
 xml_list = []
 start_xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Package xmlns="http://soap.sforce.com/2006/04/metadata">'
-end_xml = f'<version>{api_version}</version></Package>'
+end_xml = f'<version>{API_VERSION}</version></Package>'
 xml_list.append(start_xml)
 
 # Loop through each row of the dataframe
@@ -47,5 +47,5 @@ xml_list.append(end_xml)
 xml_content = "\n".join(xml_list)
 
 # Write the xml content to the package.xml file
-with open(package_xml_file, "w") as f:
+with open(PACKAGE_XML_FILE, "w") as f:
     f.write(xml_content)

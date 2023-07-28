@@ -48,13 +48,18 @@ source env/bin/activate # Unix/Macos
 pip install -r requirements.txt
 ```
 
-### Complete setting in `user_config.py` file
+### Copy .env file
+```bash
+cp .env.example .env
 ```
-org_username = "<your_org_username>" # using command "sfdx org list" to see list of org username
-api_version = '55.0' # Depend on your project
-modified_filter_duration = 'today' # 'today', 'yesterday', '2023-07-22', '2023-07-22T08'
+
+### Complete setting in `.env` file
+```bash
+ORG_USERNAME="<your_org_username>" # using command "sfdx org list" to see list of org username
+API_VERSION='55.0' # (Default(55.0)) Depend on your project
+MODIFIED_FILTER_DURATION='today' # (Default 'today') 'today', 'yesterday', '2023-07-22', '2023-07-22T08'
 # get all metadata has lastModifiedDate since modified_filter_duration, Todo: 
-package_xml_file = f"{data_base_folder}/package.xml" # can direct to your project manifest/package.xml, it will override your file
+PACKAGE_XML_FILE="<package.xml_file_path>" # (Default ./data/package.xml) can direct to your project manifest/package.xml, it will override your file
 ```
 
 ### Get all metadata types from org

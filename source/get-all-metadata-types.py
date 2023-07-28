@@ -5,12 +5,12 @@ import json
 
 import user_config as config
 
-org_username = config.org_username
+ORG_USERNAME = config.ORG_USERNAME
 
 metadata_types_file = config.metadata_types_file
 
 # Define the command to execute sfdx
-command = f"sfdx force:mdapi:describemetadata -u {org_username} -a 52.0 --json"
+command = f"sfdx force:mdapi:describemetadata -u {ORG_USERNAME} -a 52.0 --json"
 
 # Run the command and capture the output
 output = subprocess.check_output(command, shell=True)

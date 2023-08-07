@@ -1,51 +1,46 @@
-# Import pandas library
 import pandas as pd
 
 import user_config as config
 
 PACKAGE_XML_FILE = config.PACKAGE_XML_FILE
-changed_metadata_file = config.changed_metadata_file
+CHANGED_METADATA_FILE = config.CHANGED_METADATA_FILE
+IGNORE_CHANGED_METADATA_FILE = config.IGNORE_CHANGED_METADATA_FILE
 API_VERSION = config.API_VERSION
 
-# Read the changed_metadata_file file into a dataframe
-df = pd.read_csv(changed_metadata_file)
+# Load the CSV files into DataFrames
+try:
+    df1 = pd.read_csv(CHANGED_METADATA_FILE)
+except pd.errors.EmptyDataError:
+    exit(0)
 
-# Create an empty list to store the xml elements
-xml_list = []
-start_xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Package xmlns="http://soap.sforce.com/2006/04/metadata">'
-end_xml = f'<version>{API_VERSION}</version></Package>'
-xml_list.append(start_xml)
+try:
+    df2 = pd.read_csv(IGNORE_CHANGED_METADATA_FILE)
+except pd.errors.EmptyDataError:
+    df2 = pd.DataFrame()
 
-# Loop through each row of the dataframe
-for index, row in df.iterrows():
-    # Get the name and members values from the row
-    name = row["metadata_type"]
-    members = row["fullName"]
+if df2.empty:
+    diff_df = df1
+else:
+    # Find the differences between the two DataFrames
+    diff_df = pd.concat([df1, df2]).drop_duplicates(keep=False)
 
-    # Split the members value by comma into a list
-    members_list = members.split(",")
+# Group the differences by 'metadata_type'
+grouped_diff = diff_df.groupby('metadata_type')['fullName'].apply(list).reset_index()
 
-    # Create an xml element for the name value
-    xml_name = f"<name>{name}</name>"
+def format_to_xml(row):
+    members = ''.join(f"<members>{member}</members> " for member in row['fullName'])
+    metdata_name = row['metadata_type']
+    return f"<types>{members}<name>{metdata_name}</name></types>"
 
-    # Create an xml element for each member value
-    xml_members = ""
-    for member in members_list:
-        xml_member = f"<members>{member}</members>"
-        xml_members += xml_member
+if grouped_diff.empty:
+    print('No differences found')
+    exit(0)
+else:
+    # Apply the XML-like formatting to each row and wrap all content in 'xml_format'
+    end_line = "\n"
+    grouped_diff['xml_format'] = grouped_diff.apply(format_to_xml, axis=1)
+    result_xml = f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Package xmlns="http://soap.sforce.com/2006/04/metadata">{end_line}{end_line.join(grouped_diff["xml_format"])}{end_line}<version>{API_VERSION}</version>{end_line}</Package>'
 
-    # Combine the xml elements into one string
-    xml_string = f"<types>{xml_name}{xml_members}</types>"
-
-    # Append the xml string to the xml list
-    xml_list.append(xml_string)
-
-# Append the end of xml format
-xml_list.append(end_xml)
-
-# Join the xml list elements by newline into one string
-xml_content = "\n".join(xml_list)
-
-# Write the xml content to the package.xml file
-with open(PACKAGE_XML_FILE, "w", encoding='utf-8') as f:
-    f.write(xml_content)
+    # Save the results to a new file
+    with open(PACKAGE_XML_FILE, 'w', encoding='utf-8') as file:
+        file.write(result_xml)

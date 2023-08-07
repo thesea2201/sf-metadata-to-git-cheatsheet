@@ -49,6 +49,7 @@ cp .env.example .env
 ### Complete setting in `.env` file
 ```bash
 ORG_USERNAME="<your_org_username>" # using command "sfdx org list" to see list of org username
+DATA_BASE_FOLDER="" # (optional) default: "data-<your_org_username>"
 API_VERSION='55.0' # (Default(55.0)) Depend on your project
 MODIFIED_FILTER_DURATION='today'
 # (Default 'today') 'today', 'yesterday', '2023-07-22', '2023-07-22T08'

@@ -8,8 +8,8 @@ from tqdm import tqdm
 import user_config as config
 
 ORG_USERNAME = config.ORG_USERNAME
-metadata_types_file = config.metadata_types_file
-changed_metadata_file = config.changed_metadata_file
+METADATA_TYPES_FILE = config.METADATA_TYPES_FILE
+CHANGED_METADATA_FILE = config.CHANGED_METADATA_FILE
 MODIFIED_FILTER_DURATION = config.MODIFIED_FILTER_DURATION
 
 today = datetime.datetime.now().date()
@@ -51,14 +51,14 @@ filtered_date = get_date_from_type()
 
 print(filtered_date)
 
-with open(changed_metadata_file, "w", newline='') as f:
+with open(CHANGED_METADATA_FILE, "w", newline='') as f:
     # Create a csv writer object
     writer = csv.writer(f)
     # Write the header row
     writer.writerow(["metadata_type", "fullName"])
 
 # Open the metadata_types_file file for reading
-with open(metadata_types_file, "r") as f:
+with open(METADATA_TYPES_FILE, "r") as f:
     # Create a csv reader object
     reader = csv.reader(f)
     # Skip the header row
@@ -77,7 +77,7 @@ with open(metadata_types_file, "r") as f:
         # Check if the output has any result
         if output_json["result"]:
             # Open the changed_metadata_file file for rewrite
-            with open(changed_metadata_file, "a", newline='', encoding='utf-8') as f:
+            with open(CHANGED_METADATA_FILE, "a", newline='', encoding='utf-8') as f:
                 # Create a csv writer object
                 writer = csv.writer(f)
                 # Loop through each result

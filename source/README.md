@@ -63,14 +63,25 @@ PACKAGE_XML_FILE="<package.xml_file_path>"
 ```bash
 python3 get-all-metadata-types.py
 ```
-Result will be stored in [source/data/metadata-types.csv](sourcedatametadata-types.csv) file(Unix/macOS) or [source\data\metadata-types.csv](source\data\metadata-types.csv) file(Windows)
+Result will be stored in `source/<DATA_BASE_FOLDER>/metadata-types.csv` file
 
 ### Get all changed metadata
 ```bash
 python3 get-changed-metadata.py
+```
+Result will be stored in `source/<DATA_BASE_FOLDER>/changed_metadata.csv` file
+
+(Optional) If you want to ignore some metadata, just add them into `source\<DATA_BASE_FOLDER>\ignore_changed_metadata.csv` file like this:
+
+```
+metadata_type,fullName
+Profile,StandardAul
+Profile,ServiceCloud
+Profile,Standard
 ```
 
 ### Update your package.xml file
 ```bash
 python3 update-package-file.py
 ```
+Result will be stored in `source/<DATA_BASE_FOLDER>/package.xml` file

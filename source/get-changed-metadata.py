@@ -77,7 +77,7 @@ with open(metadata_types_file, "r") as f:
         # Check if the output has any result
         if output_json["result"]:
             # Open the changed_metadata_file file for rewrite
-            with open(changed_metadata_file, "a", newline='') as f:
+            with open(changed_metadata_file, "a", newline='', encoding='utf-8') as f:
                 # Create a csv writer object
                 writer = csv.writer(f)
                 # Loop through each result

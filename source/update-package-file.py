@@ -47,5 +47,5 @@ xml_list.append(end_xml)
 xml_content = "\n".join(xml_list)
 
 # Write the xml content to the package.xml file
-with open(PACKAGE_XML_FILE, "w") as f:
+with open(PACKAGE_XML_FILE, "w", encoding='utf-8') as f:
     f.write(xml_content)
